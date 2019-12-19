@@ -1,0 +1,2 @@
+[0805/180107.191:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0805/180107.192:ERROR:exception_snapshot_win.cc(98)] thread ID 3420 not found in process
