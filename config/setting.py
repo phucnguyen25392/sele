@@ -10,4 +10,4 @@ gb_refesh_token = 'zz222pp58uf7z6xvgvuqkxd4'
 ##### Define Driver
 #macchromedriver = '/Users/mac/sele/chromedriver'
 #windowcgromedriver = 'D:\sele\chromedriver.exe'
-gb_chromedriverlocation = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exeß'
+gb_chromedriverlocation = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'
