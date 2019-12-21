@@ -19,20 +19,8 @@ class Test_HTMLTestRunner(unittest.TestCase):
         # suite of TestCases
         self.suite = unittest.TestSuite()
         self.suite.addTests([
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(logintc.ValidLogin),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(logintc.InvalidLogin),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(tokentc.RootInsertValidToken),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(tokentc.RootInsertInvalidToken),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(tokentc.AdminInsertValidToken),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(usertc.RootUserCreateAdminAccount),
-            unittest.defaultTestLoader.loadTestsFromTestCase(usertc.RootUserCreateUserAccount),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(usertc.AdminUserCreateUserAccount),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(companytc.InsertValidCompany),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(tagtc.AdminSetTagToContact),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(campagintc.AddNewContactToCampagin),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.SendNotiWhenDeleteUser),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.SendNotiWhenMessSpecUser),
-            ## unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.SendNotiWhenMessAllUser),
+            unittest.defaultTestLoader.loadTestsFromTestCase(campagintc.Campaign),
+            
             ])
 
         # Invoke TestRunner

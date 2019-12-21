@@ -107,7 +107,7 @@ class init(BasePage):
         else:
             side_menu_open_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_open_link)
             side_menu_open_link.click()
-        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//*[@id=\"sidebar-nav\"]//span[contains(text(),'Administrator')]")))
+        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//*[@id=\"sidebar-nav\"]//span[contains(text(),'Dashboard')]")))
         time.sleep(5)
         campaign_link = self.driver.find_element(*RealmaxMainPageLocators.campaign_link)
         campaign_link.click()
