@@ -13,5 +13,5 @@ gb_user = 'phucnguyen25392+seleuser@gmail.com'
 gb_user_pass = 'Test@123'
 ##### Define Driver
 #macchromedriver = '/Users/mac/sele/chrome_driver_mac/chromedriver'
-#windowcgromedriver = 'D:\sele\chromedriver.exe'
+#windowcgromedriver = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'
 gb_chromedriverlocation = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'

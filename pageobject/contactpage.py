@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
+import common.actions as actions
 import time
 
 
@@ -36,8 +38,8 @@ class init(BasePage):
     def applyTagToContact(self, email, tag):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
         time.sleep(5)
-        add_tag_link = self.driver.find_element_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Apply tags to this contact']")
-        add_tag_link.click()
+        action = actions.init(self.driver)
+        action.click('contact', 'apply_tag',email)
         time.sleep(2)
         WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, "//div[@class='modal-dialog']//input[@id='input-auto-complete-tags']")))
         tag_input = self.driver.find_element(*RealmaxTagDialogLocator.tag_input)
@@ -72,3 +74,35 @@ class init(BasePage):
         time.sleep(5)
         ok_btn = self.driver.find_element(*RealmaxContactPageLocators.ok_btn)
         ok_btn.click()
+
+    def searchContact(self, contact_name, contact_email=None):
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
+        fname_search_tb = self.driver.find_element(*RealmaxContactPageLocators.fname_search_tb)
+        fname_search_tb.send_keys(contact_name)
+        if contact_email:
+            email_search_tb = self.driver.find_element(*RealmaxContactPageLocators.email_search_tb)
+            email_search_tb.send_keys(contact_email)
+        time.sleep(2)
+        search_btn = self.driver.find_element(*RealmaxContactPageLocators.search_btn)
+        search_btn.click()
+    
+    def removeAllTagsInContact(self, contact_email):
+        time.sleep(2)
+        try:
+            tags = self.driver.find_elements(By.XPATH, ".//div[@id='list-selected-tags']//button[@class='btn btn-remove-tag btn-xs pull-right']")
+        except NoSuchElementException:
+            pass
+        while len(tags) > 0:
+            time.sleep(2)
+            tags[0].click()
+            try:
+                tags = self.driver.find_elements(By.XPATH, ".//div[@id='list-selected-tags']//button[@class='btn btn-remove-tag btn-xs pull-right']")
+            except NoSuchElementException:
+                pass 
+        save_tag_btn = self.driver.find_element(*RealmaxContactPageLocators.save_tag_btn)
+        save_tag_btn.click()
+        time.sleep(3)
+        ok_btn = self.driver.find_element(*RealmaxContactPageLocators.ok_btn)
+        ok_btn.click()
+
+    

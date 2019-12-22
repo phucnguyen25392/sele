@@ -189,9 +189,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>&lt;Realmax Test&gt;</h1>
-<p class='attribute'><strong>Start Time:</strong> 2019-12-22 00:37:44</p>
-<p class='attribute'><strong>Duration:</strong> 0:03:03.372210</p>
-<p class='attribute'><strong>Status:</strong> Pass 3 Failure 1</p>
+<p class='attribute'><strong>Start Time:</strong> 2019-12-22 23:23:10</p>
+<p class='attribute'><strong>Duration:</strong> 0:05:24.346982</p>
+<p class='attribute'><strong>Status:</strong> Pass 5 Failure 1</p>
 
 <p class='description'>This demonstrates the report output by HTMLTestRunner.</p>
 </div>
@@ -223,11 +223,11 @@ function showOutput(id, name) {
 
 <tr class='failClass'>
     <td>tests.campagintc.Campaign</td>
-    <td>4</td>
-    <td>3</td>
+    <td>6</td>
+    <td>5</td>
     <td>1</td>
     <td>0</td>
-    <td><a href="javascript:showClassDetail('c1',4)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('c1',6)">Detail</a></td>
 </tr>
 
 <tr id='pt1.1' class='hiddenRow'>
@@ -299,7 +299,7 @@ ft1.3: Checkpoint1[Pass]: Create new campaign button not display
 Checkpoint2[Pass]: Create new campaign link not display 
 Checkpoint3[Failed]: Edit campaign icon displayed 
 Traceback (most recent call last):
-  File "/Users/mac/sele/tests/campagintc.py", line 154, in test_3_User_Cannot_Create_or_Edit_Campaign
+  File "/Users/mac/sele/tests/campagintc.py", line 157, in test_3_User_Cannot_Create_or_Edit_Campaign
     assert False
 AssertionError
 
@@ -337,10 +337,60 @@ Checkpoint2[Pass]: Sele campaign 2 not displayed
     </td>
 </tr>
 
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_5_Add_Contact_To_Campaign</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
+        pass</a>
+
+    <div id='div_pt1.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.5: Checkpoint1[Pass]: Realmax tag displayed
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_6_Deletet_Campaign</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.6')" >
+        pass</a>
+
+    <div id='div_pt1.6' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.6').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.6: Checkpoint1[Pass]: Sele campaign 2 not displayed
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
 <tr id='total_row'>
     <td>Total</td>
-    <td>4</td>
-    <td>3</td>
+    <td>6</td>
+    <td>5</td>
     <td>1</td>
     <td>0</td>
     <td>&nbsp;</td>

@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from locator.locators import RealmaxCampaignPageLocators
 from selenium.common.exceptions import NoSuchElementException
+import common.actions as actions
 import time
 
 class BasePage(object):
@@ -39,20 +40,15 @@ class init(BasePage):
             user_auto_complete = self.driver.find_element_by_xpath(".//div[@id='input-auto-complete-usersautocomplete-list']")
             user_auto_complete.click()
             user_tb.clear()
-        save_btn = self.driver.find_element(*RealmaxCampaignPageLocators.save_btn)
-        save_btn.click()
+        add_campaign_save_btn = self.driver.find_element(*RealmaxCampaignPageLocators.add_campaign_save_btn)
+        add_campaign_save_btn.click()
         time.sleep(3)
         ok_btn = self.driver.find_element(*RealmaxCampaignPageLocators.ok_btn)
         ok_btn.click()
 
     def editCampaign(self, name, new_name, tags,users=None):
-        time.sleep(2)
-        try:
-            edit_campaign_btn = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(.,'" + name + "')]//div[@name='" + name + "']//span[@title='Edit']")
-        except NoSuchElementException:
-            pass
-        if edit_campaign_btn:
-            edit_campaign_btn.click()
+        action = actions.init(self.driver)
+        action.click('campaign','edit', name)
         WebDriverWait(self.driver,10).until(cond.title_is("Campaign"))
         name_tb = self.driver.find_element(*RealmaxCampaignPageLocators.name_tb)
         name_tb.clear()
@@ -81,8 +77,38 @@ class init(BasePage):
                 user_auto_complete = self.driver.find_element_by_xpath(".//div[@id='input-auto-complete-usersautocomplete-list']")
                 user_auto_complete.click()
                 user_tb.clear()
+        add_campaign_save_btn = self.driver.find_element(*RealmaxCampaignPageLocators.add_campaign_save_btn)
+        add_campaign_save_btn.click()
+        time.sleep(3)
+        ok_btn = self.driver.find_element(*RealmaxCampaignPageLocators.ok_btn)
+        ok_btn.click()
+
+    def addContactToCampaign(self, campaign_name, contacts):
+        time.sleep(3)
+        action = actions.init(self.driver)
+        action.click('campaign','contact_management', campaign_name)
+        time.sleep(2)
+        contact_tb = self.driver.find_element(*RealmaxCampaignPageLocators.tag_tb)
+        for contact in contacts:
+            time.sleep(2)
+            contact_tb.send_keys(contact)
+            time.sleep(3)
+            contact_auto_complete = self.driver.find_element_by_xpath(".//div[@id='input-auto-complete-tagsautocomplete-list']")
+            contact_auto_complete.click()
+            contact_tb.clear()
         save_btn = self.driver.find_element(*RealmaxCampaignPageLocators.save_btn)
         save_btn.click()
         time.sleep(3)
+        ok_btn = self.driver.find_element(*RealmaxCampaignPageLocators.ok_btn)
+        ok_btn.click()
+        
+    def deleteCampaign(self, campaign_name):
+        time.sleep(3)
+        action = actions.init(self.driver)
+        action.click('campaign','delete', campaign_name)
+        time.sleep(2)
+        confirm_delete_ok_btn = self.driver.find_element(*RealmaxCampaignPageLocators.confirm_delete_ok_btn)
+        confirm_delete_ok_btn.click()
+        time.sleep(2)
         ok_btn = self.driver.find_element(*RealmaxCampaignPageLocators.ok_btn)
         ok_btn.click()

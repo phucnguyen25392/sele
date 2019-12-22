@@ -77,12 +77,17 @@ class RealmaxTagDialogLocator(object):
     ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")
 
 class RealmaxContactPageLocators(object):
-    fname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'First name')]//input[@id='fisrtName']")
+    # ui id is wrong "fisrt" temp handle 
+    fname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'First name')]//input[@id='firstName']")
     lname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'Last name')]//input[@id='lastName']")
     email_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'Email')]//input[@id='email']")
     save_btn = (By.XPATH, ".//*[@class='btn btn-primary btn-flat btn-apply']")
     ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")
     confirm_delete_ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@id=\"btnConfirm\"]")
+    fname_search_tb = (By.XPATH, ".//input[@id='fisrtName']")
+    email_search_tb = (By.XPATH, ".//input[@id='email']")
+    search_btn = (By.XPATH, ".//button[@class='btn btn-primary btn-flat btn-search']")
+    save_tag_btn = (By.XPATH, ".//button[@class='btn btn-primary btn-save']")
 
 class RealmaxTagPageLocators(object):
     apply_vip_contact_link = (By.XPATH, ".//table[@id='table_data']//tr[contains(., '[VIP]')]//span[@title='Apply this tag to contacts']")
@@ -94,5 +99,8 @@ class RealmaxCampaignPageLocators(object):
     name_tb = (By.XPATH, ".//input[@id='name']")
     tag_tb = (By.XPATH, ".//input[@id='input-auto-complete-tags']")
     user_tb = (By.XPATH, ".//input[@id='input-auto-complete-users']")
-    save_btn = (By.XPATH, ".//a[@class='btn btn-primary btn-flat btn-apply']")
+    save_btn = (By.XPATH, ".//button[@class='btn btn-primary btn-save']")
+    add_campaign_save_btn = (By.XPATH, ".//a[@class='btn btn-primary btn-flat btn-apply']")
     ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")
+    confirm_delete_ok_btn = (By.XPATH, ".//button[@id='btnConfirm']")
+    
