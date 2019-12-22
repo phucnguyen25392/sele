@@ -234,7 +234,7 @@ class Campaign(unittest.TestCase):
         contact_page.searchContact('Seleuser')
         action = actions.init(self.driver)
         action.click('contact', 'apply_tag', 'phucnguyen25392+seleuser@gmail.com')
-        time.sleep(3)
+        time.sleep(5)
         try:
             applied_tag = self.driver.find_elements(By.XPATH, ".//div[@id='list-selected-tags']//label[contains(.,'Realmax')]")
         except NoSuchElementException:
