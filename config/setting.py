@@ -12,6 +12,7 @@ gb_admin_pass = 'Test@123'
 gb_user = 'phucnguyen25392+seleuser@gmail.com'
 gb_user_pass = 'Test@123'
 ##### Define Driver
+root_dir = 'C:\Jenkins\workspace\sele_test\sele'
 #macchromedriver = '/Users/mac/sele/chrome_driver_mac/chromedriver'
 #windowcgromedriver = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'
-gb_chromedriverlocation = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'
+gb_chromedriverlocation = root_dir + '\chrome_driver_mac/chromedriver'

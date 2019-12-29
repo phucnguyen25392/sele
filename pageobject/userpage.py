@@ -4,6 +4,10 @@ from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+# Action
+import common.actions as actions
+
 import time
 
 class BasePage(object):
@@ -58,16 +62,34 @@ class init(BasePage):
     def appplyTagToUser(self, email, tag):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(2)
-        add_tag_link = self.driver.find_element_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Grant Tag Permission']")
-        add_tag_link.click()
-        time.sleep(2)
+        try:
+            pages = self.driver.find_elements(By.XPATH, ".//ul[@class='pagination']//li[@class='paginate_button page-item ']")
+        except NoSuchElementException:
+            pass
+        if len(pages) > 0:
+            i = 2
+            while i <= len(pages) + 2:
+                try:
+                    add_tag_link = self.driver.find_elements_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Grant Tag Permission']")
+                except NoSuchElementException:
+                    pass
+                if len(add_tag_link) == 0:
+                    page_navigate_btn = self.driver.find_element(By.XPATH, ".//ul[@class='pagination']//a[contains(.,'" + str(i) + "')]")
+                    page_navigate_btn.click()
+                    time.sleep(5)
+                    i += 1
+                else:
+                    time.sleep(2)
+                    action = actions.init(self.driver)
+                    action.click('user', 'apply_tag', email)
+                    time.sleep(5)
+                    break
         WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, "//div[@class='modal-dialog']//input[@id='input-auto-complete-tags']")))
         tag_input = self.driver.find_element(*RealmaxTagDialogLocator.tag_input)
         tag_input.send_keys(tag)
-        time.sleep(2)
-        vip_tag = self.driver.find_element_by_xpath(".//div[@class='modal-content']//div[@class='modal-body']//div[@id='input-auto-complete-tagsautocomplete-list']//div[contains(.,'[VIP]')]")
-        vip_tag.click()
-        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//div[@class='modal-content']//div[@class='modal-body']//div[@id='list-selected-tags']//div[contains(.,'[VIP]')]")))
+        time.sleep(5)
+        tag = self.driver.find_element_by_xpath(".//div[@class='modal-content']//div[@class='modal-body']//div[@id='input-auto-complete-tagsautocomplete-list']//div[contains(.,'" + tag + "')]")
+        tag.click()
         time.sleep(2)
         save_btn = self.driver.find_element(*RealmaxTagDialogLocator.save_btn)
         save_btn.click()
@@ -103,6 +125,46 @@ class init(BasePage):
         ok_btn = self.driver.find_element(*RealmaxUserPageLocators.ok_btn)
         ok_btn.click()
         
-
+    def removeAllTagsInUser(self, user_email):
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
+        time.sleep(2)
+        try:
+            pages = self.driver.find_elements(By.XPATH, ".//ul[@class='pagination']//li[@class='paginate_button page-item ']")
+        except NoSuchElementException:
+            pass
+        if len(pages) > 0:
+            i = 2
+            while i <= len(pages) + 2:
+                try:
+                    add_tag_link = self.driver.find_elements_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + user_email + "')]//span[@title='Grant Tag Permission']")
+                except NoSuchElementException:
+                    pass
+                if len(add_tag_link) == 0:
+                    page_navigate_btn = self.driver.find_element(By.XPATH, ".//ul[@class='pagination']//a[contains(.,'" + str(i) + "')]")
+                    page_navigate_btn.click()
+                    time.sleep(5)
+                    i += 1
+                else:
+                    action = actions.init(self.driver)
+                    action.click('user', 'apply_tag', user_email)
+                    time.sleep(5)
+                    break
+        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, "//div[@class='modal-dialog']//input[@id='input-auto-complete-tags']")))
+        try:
+            remove_tags = self.driver.find_elements(By.XPATH, ".//div[@id='list-selected-tags']//button[@class='btn btn-remove-tag-permission btn-xs pull-right']")
+        except NoSuchElementException:
+            pass
+        while len(remove_tags) > 0:
+            time.sleep(2)
+            remove_tags[0].click()
+            try:
+                remove_tags = self.driver.find_elements(By.XPATH, ".//div[@id='list-selected-tags']//button[@class='btn btn-remove-tag-permission btn-xs pull-right']")
+            except NoSuchElementException:
+                pass
+        save_btn = self.driver.find_element(*RealmaxTagDialogLocator.save_btn)
+        save_btn.click()
+        time.sleep(3)
+        ok_btn = self.driver.find_element(*RealmaxTagDialogLocator.ok_btn)
+        ok_btn.click()
 
 

@@ -37,17 +37,16 @@ class init(BasePage):
 
     def applyTagToContact(self, email, tag):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        time.sleep(5)
+        time.sleep(3)
         action = actions.init(self.driver)
-        action.click('contact', 'apply_tag',email)
+        action.click('contact', 'apply_tag', email)
         time.sleep(2)
         WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, "//div[@class='modal-dialog']//input[@id='input-auto-complete-tags']")))
         tag_input = self.driver.find_element(*RealmaxTagDialogLocator.tag_input)
         tag_input.send_keys(tag)
-        time.sleep(2)
-        vip_tag = self.driver.find_element_by_xpath(".//div[@class='modal-content']//div[@class='modal-body']//div[@id='input-auto-complete-tagsautocomplete-list']//div[contains(.,'[VIP]')]")
-        vip_tag.click()
-        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//div[@class='modal-content']//div[@class='modal-body']//div[@id='list-selected-tags']//div[contains(.,'[VIP]')]")))
+        time.sleep(5)
+        tag = self.driver.find_element_by_xpath(".//div[@class='modal-content']//div[@class='modal-body']//div[@id='input-auto-complete-tagsautocomplete-list']//div[contains(.,'" + tag + "')]")
+        tag.click()
         save_btn = self.driver.find_element(*RealmaxTagDialogLocator.save_btn)
         save_btn.click()
         time.sleep(5)
@@ -55,6 +54,7 @@ class init(BasePage):
         ok_btn.click()
 
     def removeContact(self, email):
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
         try:
             side_menu_open_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_open_link)
         except NoSuchElementException:
@@ -64,7 +64,6 @@ class init(BasePage):
         else:
             side_menu_close_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_close_link)
             side_menu_close_link.click()
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
         time.sleep(3)
         remove_contact_link = self.driver.find_element_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Remove']")
         remove_contact_link.click()
@@ -75,13 +74,10 @@ class init(BasePage):
         ok_btn = self.driver.find_element(*RealmaxContactPageLocators.ok_btn)
         ok_btn.click()
 
-    def searchContact(self, contact_name, contact_email=None):
+    def searchContact(self, contact_email):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        fname_search_tb = self.driver.find_element(*RealmaxContactPageLocators.fname_search_tb)
-        fname_search_tb.send_keys(contact_name)
-        if contact_email:
-            email_search_tb = self.driver.find_element(*RealmaxContactPageLocators.email_search_tb)
-            email_search_tb.send_keys(contact_email)
+        email_search_tb = self.driver.find_element(*RealmaxContactPageLocators.email_search_tb)
+        email_search_tb.send_keys(contact_email)
         time.sleep(2)
         search_btn = self.driver.find_element(*RealmaxContactPageLocators.search_btn)
         search_btn.click()

@@ -15,6 +15,7 @@ class BasePage(object):
 class init(BasePage):
 
     def removeContagInTag(self, tag, contact):
+        time.sleep(2)
         apply_tag_contact_link = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(., '" + tag + "')]//span[@title='Apply this tag to contacts']")
         apply_tag_contact_link.click()
         WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//div[@class='modal-content']//div[@class='modal-header']//h4[contains(., 'Manage applied contact(s) of tag')]")))

@@ -231,7 +231,7 @@ class Campaign(unittest.TestCase):
         dashboard_page.navigateToManageContactPage()
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
         contact_page = contactpage.init(self.driver)
-        contact_page.searchContact('Seleuser')
+        contact_page.searchContact('phucnguyen25392+seleuser@gmail.com')
         action = actions.init(self.driver)
         action.click('contact', 'apply_tag', 'phucnguyen25392+seleuser@gmail.com')
         time.sleep(5)

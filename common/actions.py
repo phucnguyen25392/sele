@@ -72,6 +72,44 @@ class init(BaseAction):
                     pass
                 if apply_tag:
                     apply_tag.click()
+        # Require user email
+        if element_type == 'user':
+            if action_type == 'delete':
+                time.sleep(2)
+                try:
+                    delete_user = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(.,'" + element_name + "')]//span[@title='Remove']")
+                except NoSuchElementException:
+                    pass
+                if delete_user:
+                    delete_user.click()
+            elif action_type == 'edit':
+                time.sleep(2)
+                try:
+                    edit_user = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(.,'" + element_name + "')]//span[@title='Edit']")
+                except NoSuchElementException:
+                    pass
+                if edit_user:
+                    edit_user.click()
+            elif action_type == 'apply_tag':
+                time.sleep(2)
+                try:
+                    apply_tag = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(.,'" + element_name + "')]//span[@title='Grant Tag Permission']")
+                except NoSuchElementException:
+                    pass
+                if apply_tag:
+                    apply_tag.click()
+        if element_type == 'tag':
+            if action_type == 'apply_contact':
+                time.sleep(2)
+                try:
+                    apply_contact = self.driver.find_element_by_xpath(".//table[@id='table_data']//tr[contains(.,'" + element_name + "')]//span[@title='Apply this tag to contacts']")
+                except NoSuchElementException:
+                    pass
+                if apply_contact:
+                    apply_contact.click()
+            else:
+                pass
+
                
             
 
