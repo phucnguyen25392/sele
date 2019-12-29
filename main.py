@@ -1,5 +1,6 @@
 import unittest
 import sys
+import platform
 import lib.HTMLTestRunner as HTMLTestRunner
 import tests.logintc as logintc
 import tests.tokentc as tokentc
@@ -28,7 +29,7 @@ class Test_HTMLTestRunner(unittest.TestCase):
         # Invoke TestRunner
         #buf = StringIO.StringIO()
         #runner = unittest.TextTestRunner(buf)       #DEBUG: this is the unittest baseline
-        fp = file( root_dir + '\my_report.html', 'wb')
+        fp = file(gb_report_path, 'wb')
         runner = HTMLTestRunner.HTMLTestRunner(
                     stream=fp,
                     title='<Realmax Test>',

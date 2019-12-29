@@ -1,3 +1,4 @@
+import platform
 ###############################
 ##  Define global variables ###
 ###############################
@@ -12,7 +13,12 @@ gb_admin_pass = 'Test@123'
 gb_user = 'phucnguyen25392+seleuser@gmail.com'
 gb_user_pass = 'Test@123'
 ##### Define Driver
-root_dir = 'C:\Jenkins\workspace\sele_test\sele'
-#macchromedriver = '/Users/mac/sele/chrome_driver_mac/chromedriver'
-#windowcgromedriver = 'C:\Users\Administrator\workspace\sele\chrome_driver_win\chromedriver.exe'
-gb_chromedriverlocation = root_dir + '\chrome_driver_mac/chromedriver'
+
+if platform.system() == 'Darwin':
+    root_dir = '/Users/mac/workspace/sele'
+    gb_report_path = '/Users/mac/workspace/sele/my_report.html'
+    gb_chromedriverlocation = root_dir + '/chrome_driver_mac/chromedriver'
+elif platform.system() == 'Windows':
+    root_dir = 'C:\Jenkins\workspace\sele_test\sele'
+    gb_report_path = 'C:\Jenkins\workspace\sele_test\sele\my_report.html'
+    gb_chromedriverlocation = root_dir + '\chrome_driver_win\chromedriver.exe'
