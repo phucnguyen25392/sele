@@ -78,7 +78,7 @@ class RealmaxTagDialogLocator(object):
 
 class RealmaxContactPageLocators(object):
     # ui id is wrong "fisrt" temp handle 
-    fname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'First name')]//input[@id='firstName']")
+    fname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'First name')]//input[@id='fisrtName']")
     lname_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'Last name')]//input[@id='lastName']")
     email_tb = (By.XPATH, ".//*[@id='main-form']//div[@class='container']//div[contains(.,'Email')]//input[@id='email']")
     save_btn = (By.XPATH, ".//*[@class='btn btn-primary btn-flat btn-apply']")
@@ -86,6 +86,7 @@ class RealmaxContactPageLocators(object):
     confirm_delete_ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@id=\"btnConfirm\"]")
     fname_search_tb = (By.XPATH, ".//input[@id='fisrtName']")
     email_search_tb = (By.XPATH, ".//input[@id='email']")
+    tag_search_tb = (By.XPATH, ".//input[@id='input-auto-complete-tags-2']")
     search_btn = (By.XPATH, ".//button[@class='btn btn-primary btn-flat btn-search']")
     save_tag_btn = (By.XPATH, ".//button[@class='btn btn-primary btn-save']")
 

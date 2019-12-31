@@ -52,7 +52,7 @@ class Tag(unittest.TestCase):
         dashboard_page.navigateToManageContactPage()
         time.sleep(2)
         contact_page = contactpage.init(self.driver)
-        contact_page.searchContact('phucnguyen25392+seleuser@gmail.com')
+        contact_page.searchContact('email','phucnguyen25392+seleuser@gmail.com')
         contact_page.applyTagToContact('phucnguyen25392+seleuser@gmail.com', 'Realmax')
 
         ######################

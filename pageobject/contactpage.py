@@ -29,6 +29,25 @@ class init(BasePage):
         if permission:
             permission_sb = Select(self.driver.find_element_by_xpath(".//div[@id='div-custom-fields']//select[@class='custom-field form-control']"))
             permission_sb.select_by_visible_text(permission)
+        time.sleep(1)
+        save_btn = self.driver.find_element(*RealmaxContactPageLocators.save_btn)
+        save_btn.click()
+        time.sleep(3)
+        ok_btn = self.driver.find_element(*RealmaxContactPageLocators.ok_btn)
+        ok_btn.click()
+
+    def editContact(self, fname, lname, email):
+        WebDriverWait(self.driver,10).until(cond.title_is("Contact"))
+        fname_tb = self.driver.find_element(*RealmaxContactPageLocators.fname_tb)
+        fname_tb.clear()
+        fname_tb.send_keys(fname)
+        lname_tb = self.driver.find_element(*RealmaxContactPageLocators.lname_tb)
+        lname_tb.clear()
+        lname_tb.send_keys(lname)
+        email_tb = self.driver.find_element(*RealmaxContactPageLocators.email_tb)
+        email_tb.clear()
+        email_tb.send_keys(email)
+        time.sleep(1)
         save_btn = self.driver.find_element(*RealmaxContactPageLocators.save_btn)
         save_btn.click()
         time.sleep(3)
@@ -40,7 +59,7 @@ class init(BasePage):
         time.sleep(3)
         action = actions.init(self.driver)
         action.click('contact', 'apply_tag', email)
-        time.sleep(2)
+        time.sleep(5)
         WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, "//div[@class='modal-dialog']//input[@id='input-auto-complete-tags']")))
         tag_input = self.driver.find_element(*RealmaxTagDialogLocator.tag_input)
         tag_input.send_keys(tag)
@@ -74,13 +93,23 @@ class init(BasePage):
         ok_btn = self.driver.find_element(*RealmaxContactPageLocators.ok_btn)
         ok_btn.click()
 
-    def searchContact(self, contact_email):
+    def searchContact(self, by, contact_id):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        email_search_tb = self.driver.find_element(*RealmaxContactPageLocators.email_search_tb)
-        email_search_tb.send_keys(contact_email)
-        time.sleep(2)
-        search_btn = self.driver.find_element(*RealmaxContactPageLocators.search_btn)
-        search_btn.click()
+        if by == 'email':
+            email_search_tb = self.driver.find_element(*RealmaxContactPageLocators.email_search_tb)
+            email_search_tb.send_keys(contact_id)
+            time.sleep(2)
+            search_btn = self.driver.find_element(*RealmaxContactPageLocators.search_btn)
+            search_btn.click()
+        elif by == 'tag':
+            tag_input = self.driver.find_element_by_xpath(".//div[@class='row ap-search']//input[@id='input-auto-complete-tags-2']")
+            tag_input.send_keys(contact_id)
+            WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//div[@class='row ap-search']//div[@id='input-auto-complete-tags-2autocomplete-list']//div[contains(.,'" + contact_id + "')]")))
+            tag = self.driver.find_element_by_xpath(".//div[@class='row ap-search']//div[@id='input-auto-complete-tags-2autocomplete-list']//div[contains(.,'" + contact_id + "')]")
+            tag.click()
+            time.sleep(2)
+            search_btn = self.driver.find_element(*RealmaxContactPageLocators.search_btn)
+            search_btn.click()
     
     def removeAllTagsInContact(self, contact_email):
         time.sleep(2)

@@ -9,6 +9,7 @@ import tests.companytc as companytc
 import tests.tagtc as tagtc
 import tests.campagintc as campagintc
 import tests.notificationtc as notificationtc
+import tests.contacttc as contacttc
 # setting
 from config.setting import *
 
@@ -24,6 +25,7 @@ class Test_HTMLTestRunner(unittest.TestCase):
         self.suite.addTests([
             unittest.defaultTestLoader.loadTestsFromTestCase(campagintc.Campaign),
             unittest.defaultTestLoader.loadTestsFromTestCase(tagtc.Tag),
+            unittest.defaultTestLoader.loadTestsFromTestCase(contacttc.Contact),
             ])
 
         # Invoke TestRunner
