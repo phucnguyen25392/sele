@@ -5,7 +5,7 @@ import platform
 
 #realmax_stag_url = 'https://realmax.ga'
 #realmax_pro_url = 'http://134.209.101.113'
-realmax_url = 'https://realcrm.vn'
+realmax_url = 'https://app.realcrm.vn'
 gb_access_token = 'r7k6ywzxsv75svruybasue4s'
 gb_refesh_token = 'zz222pp58uf7z6xvgvuqkxd4'
 gb_admin = 'phucnguyen25392+seleadmin@gmail.com'
