@@ -43,16 +43,36 @@ class init(BasePage):
             cancel_btn = self.driver.find_element(*RealmaxUserPageLocators.cancel_btn)
             cancel_btn.click()
         else:
-            time.sleep(5)
+            time.sleep(10)
             ok_btn = self.driver.find_element(*RealmaxUserPageLocators.ok_btn)
             ok_btn.click()
     
     def deleteUser(self, email):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(10)
-        del_sele_link = self.driver.find_element_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Remove']")
-        del_sele_link.click()
-        time.sleep(5)
+        try:
+            pages = self.driver.find_elements(By.XPATH, ".//ul[@class='pagination']//li[@class='paginate_button page-item ']")
+        except NoSuchElementException:
+            pass
+        if len(pages) > 0:
+            i = 2
+            while i <= len(pages) + 2:
+                try:
+                    del_sele_link = self.driver.find_elements_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Remove']")
+                except NoSuchElementException:
+                    pass
+                if len(del_sele_link) == 0:
+                    time.sleep(2)
+                    page_navigate_btn = self.driver.find_element(By.XPATH, ".//ul[@class='pagination']//a[contains(.,'" + str(i) + "')]")
+                    page_navigate_btn.click()
+                    time.sleep(3)
+                    i += 1
+                else:
+                    time.sleep(2)
+                    action = actions.init(self.driver)
+                    action.click('user', 'delete', email)
+                    time.sleep(3)
+                    break
         confirm_delete_ok_btn = self.driver.find_element(*RealmaxUserPageLocators.confirm_delete_ok_btn)
         confirm_delete_ok_btn.click()
         time.sleep(5)
@@ -106,7 +126,8 @@ class init(BasePage):
             specific_user_ratio.click()
             mess_user_name_tb = self.driver.find_element(*RealmaxUserPageLocators.mess_user_name_tb)
             for name in names:
-                mess_user_name_tb.send_keys(name)
+                mess_user_name_tb.send_keys("sele")
+                time.sleep(1)
                 name_item = self.driver.find_element_by_xpath(".//div[@id='input-auto-complete-message-usersautocomplete-list']/div[contains(.,'" + name + "')]")
                 name_item.click()
                 mess_user_name_tb.clear()

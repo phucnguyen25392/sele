@@ -74,18 +74,9 @@ class init(BasePage):
 
     def removeContact(self, email):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        try:
-            side_menu_open_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_open_link)
-        except NoSuchElementException:
-            pass
-        if len(side_menu_open_link) > 0:
-            pass
-        else:
-            side_menu_close_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_close_link)
-            side_menu_close_link.click()
         time.sleep(3)
-        remove_contact_link = self.driver.find_element_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Remove']")
-        remove_contact_link.click()
+        action = actions.init(self.driver)
+        action.click('contact', 'delete', email)
         time.sleep(5)
         delete_confirm_btn = self.driver.find_element(*RealmaxContactPageLocators.confirm_delete_ok_btn)
         delete_confirm_btn.click()

@@ -90,22 +90,24 @@ class init(BasePage):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage tag"))
 
     def navigateToManageContactPage(self):
-        try:
-            side_menu_close_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_close_link)
-        except NoSuchElementException:
-            pass
-        if len(side_menu_close_link) > 0:
-            pass
-        else:
-            side_menu_open_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_open_link)
-            side_menu_open_link.click()
-        WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//*[@id=\"sidebar-nav\"]//span[contains(text(),'Dashboard')]")))
-        time.sleep(5)
-        contact_link = self.driver.find_element(*RealmaxMainPageLocators.contact_link)
-        contact_link.click()
-        time.sleep(2)
-        manage_contact_link = self.driver.find_element(*RealmaxMainPageLocators.manage_contact_link)
-        manage_contact_link.click()
+        # try:
+        #     side_menu_close_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_close_link)
+        # except NoSuchElementException:
+        #     pass
+        # if len(side_menu_close_link) > 0:
+        #     pass
+        # else:
+        #     side_menu_open_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_open_link)
+        #     side_menu_open_link.click()
+        # WebDriverWait(self.driver,10).until(cond.visibility_of_any_elements_located((By.XPATH, ".//*[@id=\"sidebar-nav\"]//span[contains(text(),'Dashboard')]")))
+        # time.sleep(5)
+        # contact_link = self.driver.find_element(*RealmaxMainPageLocators.contact_link)
+        # contact_link.click()
+        # time.sleep(2)
+        # manage_contact_link = self.driver.find_element(*RealmaxMainPageLocators.manage_contact_link)
+        # manage_contact_link.click()
+        self.driver.get(realmax_url + '/contact/list')
+        
 
     def navigateToCampaignPage(self):
         try:

@@ -25,14 +25,15 @@ from config.bcolors import *
 # Element
 import element.element as element
 
-class SendNotiWhenDeleteUser(unittest.TestCase):
+class Notification(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome(gb_chromedriverlocation)
         self.driver.maximize_window()
         self.driver.get(realmax_url)
-        
-    def test(self):
+
+    #@unittest.skip("demonstrating skipping")   
+    def test_1_SendNoti_When_Delete_User(self):
         # INIT
         login_page = loginpage.init(self.driver)
         dashboard_page = dashboardpage.init(self.driver)
@@ -41,7 +42,7 @@ class SendNotiWhenDeleteUser(unittest.TestCase):
         checkElement = element.init(self.driver)
 
         # Login to realmax
-        login_page.login('root', 'abc123')
+        login_page.login(gb_admin, gb_admin_pass)
 
         # Add adminsele2
         dashboard_page.navigatetouserpage()
@@ -49,67 +50,66 @@ class SendNotiWhenDeleteUser(unittest.TestCase):
         time.sleep(2)
         user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
         user_btn.click()
-        user_page.addNewUser('sele','admin2','RealPlus','Administrator','seleadmin2@gmail.com','Test@123','Test@123','0904536477')
+        user_page.addNewUser('sele','admin2','Realmax','Administrator','phucnguyen25392+seleadmin2@gmail.com','Test@123','Test@123','0904536477')
 
         # Add usersele2
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(2)
         user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
         user_btn.click()
-        user_page.addNewUser('sele','user2','RealPlus','User','seleuser2@gmail.com','Test@123','Test@123','0904536477')
+        user_page.addNewUser('sele','user2','Realmax','User','phucnguyen25392+seleuser2@gmail.com','Test@123','Test@123','0904536477')
         self.driver.get(realmax_url + "/logout")
 
         # Delete usersele2
-        login_page.login('seleadmim@gmail.com', 'Test@123')
+        login_page.login(gb_admin, gb_admin_pass)
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         dashboard_page.navigatetouserpage()
-        user_page.deleteUser('seleuser2@gmail.com')
+        user_page.deleteUser('phucnguyen25392+seleuser2@gmail.com')
 
-        #Check noti in seleadmin2
-        self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmin2@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
-        noti_link.click()
-        time.sleep(5)
         ######################
         #                    #
         #    Checkpoint      #
         #                    #
         ######################
+        exitflag = 0
+        #Check noti in seleadmin2
+        self.driver.get(realmax_url + "/logout")
+        login_page.login('phucnguyen25392+seleadmin2@gmail.com', 'Test@123')
+        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
+        noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
+        noti_link.click()
+        time.sleep(5)
+        try:
+            sele_delete_noti = self.driver.find_elements(By.XPATH,".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'phucnguyen25392+seleuser2@gmail.com') and contains(.,'was deleted by phucnguyen25392+seleadmin@gmail.com') and contains(.,'less than a minute ago')]")
+        except NoSuchElementException:
+            pass
+        if len(sele_delete_noti) > 0:
+            print "Checkpoint1[Pass]: Delete seleuser notification displayed"
+            assert True
+        else:
+            print "Checkpoint1[Failed]: Delete seleuser notification not displayed"
+            exitflag = 1    
 
-        self.assertTrue(checkElement.is_element_present(By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'seleuser2@gmail.com') and contains(.,'was deleted by seleadmim@gmail.com') and contains(.,'less than a minute ago')]"))
-        
-        
         ######################
         #                    #
         ###### Clean up ######
         #                    #
         ###################### 
-        # Delete seleadmin2, seleuser2
-        self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmim@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        dashboard_page.navigatetouserpage()
-        user_page.deleteUser('seleadmin2@gmail.com')
-
         # Delete seleadmin2 seleuser2 contact
+        self.driver.get(realmax_url + "/logout")
+        login_page.login(gb_admin, gb_admin_pass)
+        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         dashboard_page.navigateToManageContactPage()
-        contact_page.removeContact('seleadmin2@gmail.com')
+        contact_page.removeContact('phucnguyen25392+seleadmin2@gmail.com')
         time.sleep(3)
-        contact_page.removeContact('seleuser2@gmail.com')
+        contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
 
-    def tearDown(self):
-        self.driver.close() 
+        if exitflag == 1:
+            assert False
+        self.driver.close()
 
-class SendNotiWhenMessSpecUser(unittest.TestCase):
-
-    def setUp(self):
-        self.driver = webdriver.Chrome(gb_chromedriverlocation)
-        self.driver.maximize_window()
-        self.driver.get(realmax_url)
-
-    def test(self):
+    #@unittest.skip("demonstrating skipping")
+    def test_3_SendNoti_When_Mess_To_Specific_User(self):
         # INIT
         login_page = loginpage.init(self.driver)
         dashboard_page = dashboardpage.init(self.driver)
@@ -117,36 +117,25 @@ class SendNotiWhenMessSpecUser(unittest.TestCase):
         contact_page = contactpage.init(self.driver)
         
         # Login to realmax
-        login_page.login('root', 'abc123')
-
-        # Add admin sele2
-        time.sleep(2)
+        login_page.login(gb_admin, gb_admin_pass)
+        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         dashboard_page.navigatetouserpage()
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
-        time.sleep(2)
-        user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
-        user_btn.click()
-        user_page.addNewUser('sele','admin2','RealPlus','Administrator','seleadmin2@gmail.com','Test@123','Test@123','0904536477')
-
         # Add user sele2
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(2)
         user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
         user_btn.click()
-        user_page.addNewUser('sele','user2','RealPlus','User','seleuser2@gmail.com','Test@123','Test@123','0904536477')
+        user_page.addNewUser('sele','user2','Realmax','User','phucnguyen25392+seleuser2@gmail.com','Test@123','Test@123','0904536477')
 
         # Add user sele3
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(2)
         user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
         user_btn.click()
-        user_page.addNewUser('sele','user3','RealPlus','User','seleuser3@gmail.com','Test@123','Test@123','0904536477')
-
-        self.driver.get(realmax_url + "/logout")
+        user_page.addNewUser('sele','user3','Realmax','User','phucnguyen25392+seleuser3@gmail.com','Test@123','Test@123','0904536477')
 
         # Send message to specific users
-        login_page.login('seleadmim@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         dashboard_page.navigatetouserpage()
         names = ['sele admin2', 'sele user2']
         now = datetime.datetime.now()
@@ -159,10 +148,10 @@ class SendNotiWhenMessSpecUser(unittest.TestCase):
         #    Checkpoint      #
         #                    #
         ######################
-
+        exitflag = 0
         # Check mess admin2
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmin2@gmail.com', 'Test@123')
+        login_page.login('phucnguyen25392+seleadmin2@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
         noti_link.click()
@@ -170,18 +159,18 @@ class SendNotiWhenMessSpecUser(unittest.TestCase):
         try:
             verify = self.driver.find_elements(By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'" + mess + "')]")
         except NoSuchElementException:
-            assert True
+            pass
         if len(verify) > 0:
+            print "Checkpoint1[Pass]: Message" + mess +  "displayed in seleadmin account"
             assert True
-            print "Checkpoint1: Message " + mess + " display correctly"
         else:
-            print "Checkpoint1: Message " + mess + " display incorrectly"
-            assert False
+            print "Checkpoint1[Failed]: Message" + mess +  "not displayed in seleadmin account"
+            exitflag = 1    
             
 
         # Check mess user2
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleuser2@gmail.com', 'Test@123')
+        login_page.login('phucnguyen25392+seleuser2@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
         noti_link.click()
@@ -189,18 +178,18 @@ class SendNotiWhenMessSpecUser(unittest.TestCase):
         try:
             verify = self.driver.find_elements(By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'" + mess + "')]")
         except NoSuchElementException:
-            assert True
+            pass
         if len(verify) > 0:
+            print "Checkpoint2[Pass]: Message" + mess +  "displayed in seleuser account"
             assert True
-            print "Checkpoint2: Message " + mess + " display correctly"
         else:
-            print "Checkpoint2: Message " + mess + " display incorrectly"
-            assert False
+            print "Checkpoint2[Failed]: Message" + mess +  "not displayed in seleuser account"
+            exitflag = 1   
             
 
         # Check mess user3
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleuser3@gmail.com', 'Test@123')
+        login_page.login('phucnguyen25392+seleuser3@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
         noti_link.click()
@@ -209,77 +198,28 @@ class SendNotiWhenMessSpecUser(unittest.TestCase):
             verify = self.driver.find_elements(By.XPATH, ".//ul[@class='nav navbar-nav navbar']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'" + mess + "')]")
         except NoSuchElementException:
             assert True
-        if len(verify) > 0:
-            print "Checkpoint3: Message " + mess + " display incorrectly"
-            assert False
-        else:
+        if len(verify) == 0:
+            print "Checkpoint3[Pass]: Message" + mess +  " not displayed in seleuser account"
             assert True
-            print "Checkpoint3: Message " + mess + " display correctly"
+        else:
+            print "Checkpoint3[Failed]: Message" + mess +  "displayed in seleuser account"
+            exitflag = 1  
 
-        ######################
-        #                    #
-        ###### Clean up ######
-        #                    #
-        ###################### 
-        # Delete seleadmin2, seleuser2, seleuser3
-        self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmim@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        dashboard_page.navigatetouserpage()
-        user_page.deleteUser('seleadmin2@gmail.com')
-        time.sleep(2)
-        user_page.deleteUser('seleuser2@gmail.com')
-        time.sleep(2)
-        user_page.deleteUser('seleuser3@gmail.com')
-
-        # Delete seleadmin2 seleuser2 contact
-        dashboard_page.navigateToManageContactPage()
-        contact_page.removeContact('seleadmin2@gmail.com')
-        time.sleep(3)
-        contact_page.removeContact('seleuser2@gmail.com')
-        time.sleep(3)
-        contact_page.removeContact('seleuser3@gmail.com')
-
-    def tearDown(self):
+        if exitflag == 1:
+            assert False
         self.driver.close()
 
-class SendNotiWhenMessAllUser(unittest.TestCase):
 
-    def setUp(self):
-        self.driver = webdriver.Chrome(gb_chromedriverlocation)
-        self.driver.maximize_window()
-        self.driver.get(realmax_url)
-
-    def test_AsAdmin(self):
+    #@unittest.skip("demonstrating skipping")
+    def test_4_SendNotiWhenMessAllUser_AsAdmin(self):
         # INIT
         login_page = loginpage.init(self.driver)
         dashboard_page = dashboardpage.init(self.driver)
         user_page = userpage.init(self.driver)
         contact_page = contactpage.init(self.driver)
-        
-        # Login to realmax
-        login_page.login('root', 'abc123')
-    
-        dashboard_page.navigatetouserpage()
 
-        # Add admin sele2
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
-        time.sleep(2)
-        user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
-        user_btn.click()
-        user_page.addNewUser('sele','admin2','RealPlus','Administrator','seleadmin2@gmail.com','Test@123','Test@123','0904536477')
-
-        # Add user sele2
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
-        time.sleep(2)
-        user_btn = self.driver.find_element(*RealmaxUserPageLocators.addnew_user_btn)
-        user_btn.click()
-        user_page.addNewUser('sele','user2','RealPlus','User','seleuser2@gmail.com','Test@123','Test@123','0904536477')
-
-        self.driver.get(realmax_url + "/logout")
-
-        # Send message to specific users
-        login_page.login('seleadmim@gmail.com', 'Test@123')
+        # Send message to all users
+        login_page.login(gb_admin, gb_admin_pass)
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         dashboard_page.navigatetouserpage()
         now = datetime.datetime.now()
@@ -291,10 +231,10 @@ class SendNotiWhenMessAllUser(unittest.TestCase):
         #    Checkpoint      #
         #                    #
         ######################
-
+        exitflag = 0
         # Check mess admin2
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmin2@gmail.com', 'Test@123')
+        login_page.login('phucnguyen25392+seleadmin2@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
         noti_link.click()
@@ -304,16 +244,16 @@ class SendNotiWhenMessAllUser(unittest.TestCase):
         except NoSuchElementException:
             pass
         if len(verify) > 0:
+            print "Checkpoint1[Pass]: Message" + mess +  "displayed in seleadmin account"
             assert True
-            print "Checkpoint1: Message " + mess + " display correctly"
         else:
-            print "Checkpoint1: Message " + mess + " display incorrectly"
-            assert False
+            print "Checkpoint1[Failed]: Message" + mess +  "not displayed in seleadmin account"
+            exitflag = 1 
             
 
         # Check mess user2
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleuser2@gmail.com', 'Test@123')
+        login_page.login('phucnguyen25392+seleuser2@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
         noti_link.click()
@@ -323,72 +263,45 @@ class SendNotiWhenMessAllUser(unittest.TestCase):
         except NoSuchElementException:
             pass
         if len(verify) > 0:
+            print "Checkpoint2[Pass]: Message" + mess +  "displayed in seleuser account"
             assert True
-            print "Checkpoint2: Message " + mess + " display correctly"
         else:
-            print "Checkpoint2: Message " + mess + " display incorrectly"
-            assert False
-            
+            print "Checkpoint2[Failed]: Message" + mess +  "not displayed in seleuser account"
+            exitflag = 1 
 
-    def test_AsUser(self):
+        if exitflag == 1:
+            assert False
+        self.driver.close()  
+
+    #@unittest.skip("demonstrating skipping")
+    def test_5_SendNotiWhenMessAllUser_AsUser(self):
 
         # INIT
         login_page = loginpage.init(self.driver)
         dashboard_page = dashboardpage.init(self.driver)
         user_page = userpage.init(self.driver)
         contact_page = contactpage.init(self.driver)
-
-        self.driver.get(realmax_url + "/logout")
         
-        # Send message to specific users 
-        login_page.login('seleuser2@gmail.com', 'Test@123')
+        # Checkmessage button 
+        login_page.login('phucnguyen25392+seleuser2@gmail.com', 'Test@123')
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        now = datetime.datetime.now()
-        mess = now.strftime("%H:%M:%S")
-        user_page.sendMessageToUsers( mess, 'https://www.google.com')
 
         ######################
         #                    #
         #    Checkpoint      #
         #                    #
         ######################
-
-        # Check mess admin2
-        self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmin2@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
-        noti_link.click()
-        time.sleep(5)
+        exitflag = 0
         try:
-            verify = self.driver.find_elements(By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'" + mess + "')]")
+            verify = self.driver.find_elements(By.XPATH, ".//div[@id='btn-new-message']")
         except NoSuchElementException:
             pass
-        if len(verify) > 0:
+        if len(verify) == 0:
+            print "Checkpoint1[Pass]: New message button not displayed"
             assert True
-            print "Checkpoint1: Message " + mess + " display correctly"
         else:
-            print "Checkpoint1: Message " + mess + " display incorrectly"
-            assert False
-            
-
-        # Check mess admim
-        self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmim@gmail.com', 'Test@123')
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        noti_link = self.driver.find_element(*RealmaxMainPageLocators.noti_link)
-        noti_link.click()
-        time.sleep(5)
-        try:
-            verify = self.driver.find_elements(By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif open']/ul[@class='dropdown-menu notifications']//li[@class='notif-items']//li[contains(.,'" + mess + "')]")
-        except NoSuchElementException:
-            pass
-        if len(verify) > 0:
-            assert True
-            print "Checkpoint2: Message " + mess + " display correctly"
-        else:
-            print "Checkpoint2: Message " + mess + " display incorrectly"
-            assert False
+            print "Checkpoint1[Failed]: New message button displayed"
+            exitflag = 1 
     
         ######################
         #                    #
@@ -397,20 +310,28 @@ class SendNotiWhenMessAllUser(unittest.TestCase):
         ###################### 
         # Delete seleadmin2, seleuser2, seleuser3
         self.driver.get(realmax_url + "/logout")
-        login_page.login('seleadmim@gmail.com', 'Test@123')
+        login_page.login(gb_admin, gb_admin_pass)
         WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
         dashboard_page.navigatetouserpage()
-        user_page.deleteUser('seleadmin2@gmail.com')
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(2)
-        user_page.deleteUser('seleuser2@gmail.com')
+        user_page.deleteUser('phucnguyen25392+seleadmin2@gmail.com')
+        time.sleep(2)
+        user_page.deleteUser('phucnguyen25392+seleuser2@gmail.com')
+        time.sleep(2)
+        user_page.deleteUser('phucnguyen25392+seleuser3@gmail.com')
+        time.sleep(5)
 
         # Delete seleadmin2 seleuser2 contact
         dashboard_page.navigateToManageContactPage()
-        contact_page.removeContact('seleadmin2@gmail.com')
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
         time.sleep(3)
-        contact_page.removeContact('seleuser2@gmail.com')
+        contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
+        time.sleep(3)
+        contact_page.removeContact('phucnguyen25392+seleuser3@gmail.com')
 
-    def tearDown(self):
+        if exitflag == 1:
+            assert False
         self.driver.close()
 
 
