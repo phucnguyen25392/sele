@@ -23,9 +23,9 @@ class Test_HTMLTestRunner(unittest.TestCase):
         # suite of TestCases
         self.suite = unittest.TestSuite()
         self.suite.addTests([
-            # unittest.defaultTestLoader.loadTestsFromTestCase(campagintc.Campaign),
-            # unittest.defaultTestLoader.loadTestsFromTestCase(tagtc.Tag),
-            # unittest.defaultTestLoader.loadTestsFromTestCase(contacttc.Contact),
+            unittest.defaultTestLoader.loadTestsFromTestCase(campagintc.Campaign),
+            unittest.defaultTestLoader.loadTestsFromTestCase(tagtc.Tag),
+            unittest.defaultTestLoader.loadTestsFromTestCase(contacttc.Contact),
             unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.Notification),
             ])
 
