@@ -76,18 +76,20 @@ class init(BasePage):
         newcontact_link.click()
 
     def navigateToTagPage(self):
-        try:
-            side_menu_close_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_close_link)
-        except NoSuchElementException:
-            pass
-        if len(side_menu_close_link) > 0:
-            pass
-        else:
-            side_menu_open_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_open_link)
-            side_menu_open_link.click()
-        tag_link = self.driver.find_element(*RealmaxMainPageLocators.tag_link)
-        tag_link.click()
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage tag"))
+        # try:
+        #     side_menu_close_link = self.driver.find_elements(*RealmaxMainPageLocators.side_menu_close_link)
+        # except NoSuchElementException:
+        #     pass
+        # if len(side_menu_close_link) > 0:
+        #     pass
+        # else:
+        #     side_menu_open_link = self.driver.find_element(*RealmaxMainPageLocators.side_menu_open_link)
+        #     side_menu_open_link.click()
+        # tag_link = self.driver.find_element(*RealmaxMainPageLocators.tag_link)
+        # tag_link.click()
+        # WebDriverWait(self.driver,10).until(cond.title_is("Manage tag"))
+        self.driver.get(realmax_url + '/tag/list')
+
 
     def navigateToManageContactPage(self):
         # try:
@@ -133,3 +135,11 @@ class init(BasePage):
         time.sleep(1)
         admin_mycompany_link = self.driver.find_element(*RealmaxMainPageLocators.admin_mycompany_link)
         admin_mycompany_link.click()
+
+    def navigateToMyProfilePage(self):
+        admin_profile_link = self.driver.find_element(*RealmaxMainPageLocators.admin_profile_link)
+        admin_profile_link.click()
+        time.sleep(1)
+        admin_myprofile_link = self.driver.find_element(*RealmaxMainPageLocators.admin_myprofile_link)
+        admin_myprofile_link.click()
+

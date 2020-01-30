@@ -23,8 +23,9 @@ class RealmaxMainPageLocators(object):
     campaign_link = (By.XPATH, ".//*[@id=\"sidebar-nav\"]//span[contains(text(),'Campaign')]")
     new_campaign_link = (By.XPATH,".//*[@id=\"sidebar-nav\"]//li[contains(., 'Campaign')]//li[@title='new-campaign']//a")
     manage_campaign_link = (By.XPATH,".//*[@id=\"sidebar-nav\"]//li[contains(., 'Campaign')]//li[@title='campaign']//a")
-    admin_profile_link = (By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']//li[contains(., 'My company')]")
+    admin_profile_link = (By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']//li[contains(., 'My Profile')]")
     admin_mycompany_link = (By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']//li[contains(., 'My company')]//ul[@class='dropdown-menu']//a[contains(., 'My company')]")
+    admin_myprofile_link = (By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']//li[contains(., 'My Profile')]//ul[@class='dropdown-menu']//a[contains(., 'My Profile')]")
     noti_link = (By.XPATH, ".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown dropdown-notif']")
     new_mess_link = (By.XPATH, ".//div[@id='btn-new-message']")
 
@@ -54,8 +55,10 @@ class RealmaxUserPageLocators(object):
     company_sb = (By.XPATH, ".//select[@id='select-company']")
     role_sb = (By.XPATH, ".//select[@id='select-role']")
     email_tb = (By.XPATH, ".//input[@id='email']")
+    password_tb = (By.XPATH, ".//input[@id='password']")
     newpass_tb = (By.XPATH, ".//input[@id='new-password']")
     confirmpass_tb = (By.XPATH, ".//input[@id='confirm-password']")
+    changepass_btn = (By.XPATH, ".//button[contains(.,'Change password')]")
     phone_tb = (By.XPATH, ".//input[@id='phone']")
     save_btn = (By.XPATH, "//*[@class=\"btn btn-primary btn-flat btn-apply\"]")
     ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")
@@ -104,4 +107,13 @@ class RealmaxCampaignPageLocators(object):
     add_campaign_save_btn = (By.XPATH, ".//a[@class='btn btn-primary btn-flat btn-apply']")
     ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")
     confirm_delete_ok_btn = (By.XPATH, ".//button[@id='btnConfirm']")
-    
+
+class ProfilePageLocators(object):
+    fname_tb = (By.XPATH, ".//input[@id='fisrtName']")
+    lname_tb = (By.XPATH, ".//input[@id='lastName']")
+    changepass_btn = (By.XPATH, ".//button[contains(.,'Change password')]")
+    password_tb = (By.XPATH, ".//input[@id='password']")
+    newpass_tb = (By.XPATH, ".//input[@id='new-password']")
+    confirmpass_tb = (By.XPATH, ".//input[@id='confirm-password']")
+    save_btn = (By.XPATH, "//*[@class=\"btn btn-primary btn-flat btn-apply\"]")
+    ok_btn = (By.XPATH, ".//div[@class=\"modal-content\"]//button[@class=\"btn btn-primary\"]")

@@ -47,6 +47,52 @@ class init(BasePage):
             ok_btn = self.driver.find_element(*RealmaxUserPageLocators.ok_btn)
             ok_btn.click()
     
+    def editUser(self, email, fname, lname, new_pass):
+        WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
+        time.sleep(10)
+        try:
+            pages = self.driver.find_elements(By.XPATH, ".//ul[@class='pagination']//li[@class='paginate_button page-item ']")
+        except NoSuchElementException:
+            pass
+        if len(pages) > 0:
+            i = 2
+            while i <= len(pages) + 2:
+                try:
+                    edit_user_link = self.driver.find_elements_by_xpath(".//table[@id='table_data']/tbody//tr[contains(.,'" + email + "')]//span[@title='Edit']")
+                except NoSuchElementException:
+                    pass
+                if len(edit_user_link) == 0:
+                    time.sleep(2)
+                    page_navigate_btn = self.driver.find_element(By.XPATH, ".//ul[@class='pagination']//a[contains(.,'" + str(i) + "')]")
+                    page_navigate_btn.click()
+                    time.sleep(3)
+                    i += 1
+                else:
+                    time.sleep(2)
+                    action = actions.init(self.driver)
+                    action.click('user', 'edit', email)
+                    time.sleep(3)
+                    break
+        WebDriverWait(self.driver,10).until(cond.title_is("User"))
+        fname_tb = self.driver.find_element(*RealmaxUserPageLocators.fname_tb)
+        fname_tb.clear()
+        fname_tb.send_keys(fname)
+        lname_tb = self.driver.find_element(*RealmaxUserPageLocators.lname_tb)
+        lname_tb.clear()
+        lname_tb.send_keys(lname)
+        changepass_btn = self.driver.find_element(*RealmaxUserPageLocators.changepass_btn)
+        changepass_btn.click()
+        newpass_tb = self.driver.find_element(*RealmaxUserPageLocators.newpass_tb)
+        newpass_tb.send_keys(new_pass)
+        time.sleep(3)
+        confirmpass_tb = self.driver.find_element(*RealmaxUserPageLocators.confirmpass_tb)
+        confirmpass_tb.send_keys(new_pass)
+        save_btn = self.driver.find_element(*RealmaxUserPageLocators.save_btn)
+        save_btn.click()
+        time.sleep(5)
+        ok_btn = self.driver.find_element(*RealmaxUserPageLocators.ok_btn)
+        ok_btn.click()
+    
     def deleteUser(self, email):
         WebDriverWait(self.driver,10).until(cond.title_is("Manage user"))
         time.sleep(10)
@@ -75,7 +121,7 @@ class init(BasePage):
                     break
         confirm_delete_ok_btn = self.driver.find_element(*RealmaxUserPageLocators.confirm_delete_ok_btn)
         confirm_delete_ok_btn.click()
-        time.sleep(5)
+        time.sleep(10)
         ok_btn = self.driver.find_element(*RealmaxUserPageLocators.ok_btn)
         ok_btn.click()
 

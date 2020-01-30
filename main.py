@@ -27,6 +27,7 @@ class Test_HTMLTestRunner(unittest.TestCase):
             unittest.defaultTestLoader.loadTestsFromTestCase(tagtc.Tag),
             unittest.defaultTestLoader.loadTestsFromTestCase(contacttc.Contact),
             unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.Notification),
+            unittest.defaultTestLoader.loadTestsFromTestCase(usertc.User),
             ])
 
         # Invoke TestRunner
