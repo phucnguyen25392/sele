@@ -10,6 +10,7 @@ import tests.tagtc as tagtc
 import tests.campagintc as campagintc
 import tests.notificationtc as notificationtc
 import tests.contacttc as contacttc
+import tests.permissiontc as permissiontc
 # setting
 from config.setting import *
 
@@ -28,6 +29,7 @@ class Test_HTMLTestRunner(unittest.TestCase):
             unittest.defaultTestLoader.loadTestsFromTestCase(contacttc.Contact),
             unittest.defaultTestLoader.loadTestsFromTestCase(notificationtc.Notification),
             unittest.defaultTestLoader.loadTestsFromTestCase(usertc.User),
+            unittest.defaultTestLoader.loadTestsFromTestCase(permissiontc.Permission),
             ])
 
         # Invoke TestRunner

@@ -63,17 +63,6 @@ class User(unittest.TestCase):
         #                    #
         ######################
         exitflag = 0
-        try:
-            text_change_info = self.driver.find_elements(By.XPATH,".//ul[@class='nav navbar-nav navbar-right']/li[@class='dropdown']/a[@class='dropdown-toggle']//span[contains(.,'test Change_Info_In_My_Profile')]")
-        except NoSuchElementException:
-            pass
-        if len(text_change_info) > 0:
-            print "Checkpoint1[Pass]: 'test Change_Info_In_My_Profile'  displayed"
-            assert True
-        else:
-            print "Checkpoint1[Failed]: 'test Change_Info_In_My_Profile' not displayed"
-            exitflag = 1
-
         self.driver.get(realmax_url + "/logout")
         login_page.login('phucnguyen25392+seleuser2@gmail.com', 'Test@1234')
 
@@ -82,10 +71,10 @@ class User(unittest.TestCase):
         except NoSuchElementException:
             pass
         if len(text_change_info) > 0:
-            print "Checkpoint2[Pass]: Login success 'test Change_Info_In_My_Profile' displayed"
+            print "Checkpoint1[Pass]: Login success 'test Change_Info_In_My_Profile' displayed"
             assert True
         else:
-            print "Checkpoint2[Failed]: Login not success 'test Change_Info_In_My_Profile' not displayed"
+            print "Checkpoint1[Failed]: Login not success 'test Change_Info_In_My_Profile' not displayed"
             exitflag = 1
         
         self.driver.quit()
@@ -297,10 +286,10 @@ class User(unittest.TestCase):
         ###### Clean up ######
         #                    #
         ###################### 
-        dashboard_page.navigateToManageContactPage()
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        time.sleep(10)
-        contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
+        # dashboard_page.navigateToManageContactPage()
+        # WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
+        # time.sleep(10)
+        # contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
 
         self.driver.quit()
         if exitflag == 1:

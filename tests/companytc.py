@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import unittest
 import time
 import lib.HTMLTestRunner as HTMLTestRunner
@@ -7,27 +5,41 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
 # Page 
 import pageobject.loginpage as loginpage
 import pageobject.dashboardpage as dashboardpage
 import pageobject.companypage as companypage
+import pageobject.userpage as userpage
+import pageobject.contactpage as contactpage
+import pageobject.tagpage as tagpage
+import pageobject.campaignpage as campaignpage
 # Locator
 from locator.locators import RealmaxCompanyPageLocators
+from locator.locators import RealmaxUserPageLocators
 from locator.locators import RealmaxMainPageLocators
+from locator.locators import RealmaxTagPageLocators
+from locator.locators import RealmaxContactPageLocators
+from locator.locators import RealmaxCampaignPageLocators
+# Action
+import common.actions as actions
 #setting
 from config.setting import *
 
-class InsertValidCompany(unittest.TestCase):
+class Company(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome(gb_chromedriverlocation)
-        self.driver.get("https://www.realmax.ga")
+        self.driver.maximize_window()
+        self.driver.get(realmax_url)
 
-    def test(self):
+    def test_1_Create_New_Company(self):
 
         # Login to realmax
         login_page = loginpage.init(self.driver)
-        login_page.login('root', 'abc123')
+        login_page.login(gb_admin, gb_admin_pass)
 
         # Navigate to company page
         time.sleep(2)

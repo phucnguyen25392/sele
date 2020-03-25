@@ -96,13 +96,13 @@ class Notification(unittest.TestCase):
         #                    #
         ###################### 
         # Delete seleadmin2 seleuser2 contact
-        self.driver.get(realmax_url + "/logout")
-        login_page.login(gb_admin, gb_admin_pass)
-        WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
-        dashboard_page.navigateToManageContactPage()
-        contact_page.removeContact('phucnguyen25392+seleadmin2@gmail.com')
-        time.sleep(3)
-        contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
+        # self.driver.get(realmax_url + "/logout")
+        # login_page.login(gb_admin, gb_admin_pass)
+        # WebDriverWait(self.driver,10).until(cond.title_is("Dashboard"))
+        # dashboard_page.navigateToManageContactPage()
+        # contact_page.removeContact('phucnguyen25392+seleadmin2@gmail.com')
+        # time.sleep(3)
+        # contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
 
         if exitflag == 1:
             assert False
@@ -323,12 +323,12 @@ class Notification(unittest.TestCase):
         time.sleep(5)
 
         # Delete seleadmin2 seleuser2 contact
-        dashboard_page.navigateToManageContactPage()
-        WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
-        time.sleep(3)
-        contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
-        time.sleep(3)
-        contact_page.removeContact('phucnguyen25392+seleuser3@gmail.com')
+        # dashboard_page.navigateToManageContactPage()
+        # WebDriverWait(self.driver,10).until(cond.title_is("Manage contact"))
+        # time.sleep(3)
+        # contact_page.removeContact('phucnguyen25392+seleuser2@gmail.com')
+        # time.sleep(3)
+        # contact_page.removeContact('phucnguyen25392+seleuser3@gmail.com')
 
         if exitflag == 1:
             assert False

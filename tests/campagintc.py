@@ -140,6 +140,7 @@ class Campaign(unittest.TestCase):
             print "Checkpoint2[Failed]: Create new campaign link displayed "
             exitflag = 1
 
+        time.sleep(5)
         try:
             edit_campaign_icon = self.driver.find_elements(By.XPATH, ".//table[@id='table_data']//tr[contains(.,'sele test campaign')]//div[@name='sele test campaign']//span[@title='Edit']")
         except NoSuchElementException:

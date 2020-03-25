@@ -12,6 +12,10 @@ gb_admin = 'phucnguyen25392+seleadmin@gmail.com'
 gb_admin_pass = 'Test@123'
 gb_user = 'phucnguyen25392+seleuser@gmail.com'
 gb_user_pass = 'Test@123'
+gb_root = 'root'
+gb_root_pass = 'abc123AAA@@@@'
+gb_leader = 'phucnguyen25392+seleleader@gmail.com'
+gb_leader_pass = 'Test@123'
 ##### Define Driver
 
 if platform.system() == 'Darwin':
